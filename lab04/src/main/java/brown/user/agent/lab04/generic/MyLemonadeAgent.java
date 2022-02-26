@@ -29,7 +29,7 @@ import brown.user.agent.library.offline.OfflineGame;
 import brown.user.agent.library.offline.OfflineStagHunt;
 
 public class MyLemonadeAgent extends AbsAgent implements IAgent {
-	public static final String NAME = "lemondade_switch"; // TODO: name your agent
+	public static final String NAME = "lemondade_br"; // TODO: name your agent
 	
 	private List<Integer> myActions;
 	private List<Double> myRewards;
@@ -60,8 +60,28 @@ public class MyLemonadeAgent extends AbsAgent implements IAgent {
 		List<Integer> opponent2Actions = this.getOpponentActions(1);
 		List<Double> myRewards = this.getMyRewards();
 		
+		int action;
+		
+		if (myActions.size() < 2){
+			action = (int) (Math.random() * 11);
+		}else {
+			if (opponent1Actions.get(opponent1Actions.size() - 1) == opponent1Actions.get(opponent1Actions.size() - 2)) {
+				action = (opponent1Actions.get(opponent1Actions.size() - 1) + 6) % 12;
+			}else if (opponent2Actions.get(opponent2Actions.size() - 1) == opponent2Actions.get(opponent2Actions.size() - 2)) {
+				action = (opponent2Actions.get(opponent2Actions.size() - 1) + 6) % 12;
+			}else if (opponent1Actions.get(opponent1Actions.size() - 1) == opponent2Actions.get(opponent2Actions.size() - 1) + 6 % 12) {
+				action = (opponent1Actions.get(opponent2Actions.size() - 1) + 6) % 12;
+			}else if (opponent1Actions.get(opponent1Actions.size() - 1) == myActions.get(myActions.size() - 1) + 6 % 12) {
+				action = myActions.get(myActions.size() - 1);
+			}else if (opponent2Actions.get(opponent2Actions.size() - 1) == myActions.get(myActions.size() - 1) + 6 % 12) {
+				action = myActions.get(myActions.size() - 1);
+			}else {
+				action = (int) (Math.random() * 11);
+			}
+		}
+			
 		// ...
-		return 0;
+		return action;
 	}
 	
 	
